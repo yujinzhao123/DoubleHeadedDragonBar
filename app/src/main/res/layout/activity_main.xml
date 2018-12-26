@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".MainActivity">
+
+
+
+
+    <cn.bar.DoubleHeadedDragonBar
+        android:layout_margin="10dp"
+        android:id="@+id/bar"
+        app:text_color="#5C6980"
+        app:button_img="@drawable/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <cn.bar.DoubleHeadedDragonBar
+        android:layout_below="@+id/bar"
+        android:layout_margin="10dp"
+        android:id="@+id/bar1"
+        app:text_color="#1B97F7"
+        app:button_img="@mipmap/seek_button"
+        app:button_height="40dp"
+        app:button_width="40dp"
+        app:bg_color="#999"
+        app:value_color="#e97051"
+        app:seek_height="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
