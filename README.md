@@ -20,7 +20,7 @@ Grade
 	}
         
         dependencies {
-	        implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.1'
+	        implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.2'
 	}
 ```         
 Maven
@@ -35,7 +35,7 @@ Maven
        <dependency>
 	    <groupId>com.github.yujinzhao123</groupId>
 	    <artifactId>DoubleHeadedDragonBar</artifactId>
-	    <version>1.0.1</version>
+	    <version>1.0.2</version>
 	</dependency>
 ```       
         
@@ -105,23 +105,27 @@ Maven
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final int maxValue = 6;
+          final int maxValue = 6;
         bar = findViewById(R.id.bar);
         //设置单位刻度显示
         bar.setUnit("0公斤", "6公斤");
         bar.setCallBack(new DoubleHeadedDragonBar.DhdBarCallBack() {
+
             @Override
-            public void onValueChange(float minPercentage, float maxPercentage) {
-                testView.setText(maxValue * minPercentage / 100 + "");
-                testView1.setText(maxValue * maxPercentage / 100 + "");
+            public String getMinMaxString(int value, int value1) {
+                return value + "~" + value1;
             }
+
 
             @Override
             public void onEndTouch(float minPercentage, float maxPercentage) {
 
             }
         });
-        //设置气泡按钮  注意：不设置就不显示
+        //设置气泡按钮
+        testView2 = (TextView) LayoutInflater.from(this).inflate(R.layout.toast_view, null);
+        bar.setToastView2(testView2);
+
         testView = (TextView) LayoutInflater.from(this).inflate(R.layout.toast_view, null);
         bar.setToastView(testView);
         testView.setText("0");
@@ -131,7 +135,7 @@ Maven
 
 
         bar1 = findViewById(R.id.bar1);
-        bar1.setUnit("0","100");
+        bar1.setUnit("0", "100");
         bar1.setMinValue(10);
         bar1.setMaxValue(80);
     }
