@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         bar.setToastView1(testView1);
         bar.setMinValue(20);
         bar.setMaxValue(25);
-        bar.invalidate();
+//        bar.invalidate();
+
 
 
         bar1 = findViewById(R.id.bar1);
