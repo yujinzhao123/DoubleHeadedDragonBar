@@ -209,6 +209,7 @@ public class DoubleHeadedDragonBar extends View {
         drawButton(canvas);
         calculationToastIndex();
         drawBubble();
+        showToastView();
     }
 
     public void drawBubble() {
@@ -388,21 +389,6 @@ public class DoubleHeadedDragonBar extends View {
                 if (a == minValue && b == maxValue) {
 
                 } else {
-                    if (callBack != null) {
-
-                        if (toastView != null && toastView.getParent() != null) {
-                            ((TextView) toastView).setText(callBack.getMinString(minValue));
-                        }
-
-                        if (toastView1 != null && toastView1.getParent() != null) {
-                            ((TextView) toastView1).setText(callBack.getMaxString(maxValue));
-                        }
-
-                        if (toastView2 != null && toastView2.getParent() != null) {
-                            ((TextView) toastView2).setText(callBack.getMinMaxString(minValue, maxValue));
-                        }
-                    }
-
                     invalidate();
                 }
 
@@ -419,6 +405,22 @@ public class DoubleHeadedDragonBar extends View {
         }
 
         return true;
+    }
+
+    private void showToastView() {
+        if (callBack != null) {
+            if (toastView != null && toastView.getParent() != null) {
+                ((TextView) toastView).setText(callBack.getMinString(minValue));
+            }
+
+            if (toastView1 != null && toastView1.getParent() != null) {
+                ((TextView) toastView1).setText(callBack.getMaxString(maxValue));
+            }
+
+            if (toastView2 != null && toastView2.getParent() != null) {
+                ((TextView) toastView2).setText(callBack.getMinMaxString(minValue, maxValue));
+            }
+        }
     }
 
     private void getTouchSeekValue(MotionEvent event) {

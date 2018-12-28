@@ -42,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         testView = (TextView) LayoutInflater.from(this).inflate(R.layout.toast_view, null);
         bar.setToastView(testView);
-        testView.setText("0");
         testView1 = (TextView) LayoutInflater.from(this).inflate(R.layout.toast_view, null);
         bar.setToastView1(testView1);
-        testView1.setText("6");
+        bar.setMinValue(20);
+        bar.setMaxValue(25);
+        bar.invalidate();
 
 
         bar1 = findViewById(R.id.bar1);
