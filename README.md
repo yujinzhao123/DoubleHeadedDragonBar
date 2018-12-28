@@ -20,7 +20,7 @@ Grade
 	}
         
         dependencies {
-	        implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.2'
+	        implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.4'
 	}
 ```         
 Maven
