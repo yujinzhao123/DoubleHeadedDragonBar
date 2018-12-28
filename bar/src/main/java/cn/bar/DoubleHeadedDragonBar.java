@@ -231,7 +231,7 @@ public class DoubleHeadedDragonBar extends View {
             }
             toastView2.setVisibility(VISIBLE);
 
-        }else {
+        } else {
             toastView2.setVisibility(GONE);
         }
 
@@ -385,21 +385,21 @@ public class DoubleHeadedDragonBar extends View {
                 int a = minValue;
                 int b = maxValue;
                 getTouchSeekValue(event);
-                if (a== minValue && b == maxValue){
+                if (a == minValue && b == maxValue) {
 
-                }else {
+                } else {
                     if (callBack != null) {
 
-                        if (toastView != null){
-                            ((TextView)toastView).setText(callBack.getMinString(minValue));
+                        if (toastView != null && toastView.getParent() != null) {
+                            ((TextView) toastView).setText(callBack.getMinString(minValue));
                         }
 
-                        if (toastView1 != null){
-                            ((TextView)toastView1).setText(callBack.getMaxString(maxValue));
+                        if (toastView1 != null && toastView1.getParent() != null) {
+                            ((TextView) toastView1).setText(callBack.getMaxString(maxValue));
                         }
 
-                        if (toastView2 != null){
-                            ((TextView)toastView2).setText(callBack.getMinMaxString(minValue,maxValue));
+                        if (toastView2 != null && toastView2.getParent() != null) {
+                            ((TextView) toastView2).setText(callBack.getMinMaxString(minValue, maxValue));
                         }
                     }
 
@@ -590,16 +590,16 @@ public class DoubleHeadedDragonBar extends View {
 
     public abstract static class DhdBarCallBack {
 
-        public String getMinString(int value){
-            return value+"";
+        public String getMinString(int value) {
+            return value + "";
         }
 
-        public String getMaxString(int value){
-            return value+"";
+        public String getMaxString(int value) {
+            return value + "";
         }
 
-        public String getMinMaxString(int value,int value1){
-            return value+"";
+        public String getMinMaxString(int value, int value1) {
+            return value + "";
         }
 
         public void onEndTouch(float minPercentage, float maxPercentage) {
