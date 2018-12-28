@@ -6,7 +6,7 @@
 
 ****
 # 样式
-![图](https://github.com/yujinzhao123/DoubleHeadedDragonBar/blob/master/yyyyy_gaitubao_com_339x603.gif)
+![图](https://github.com/yujinzhao123/DoubleHeadedDragonBar/blob/master/alf86-zl32e.gif)
 *****
 
 ## 使用
