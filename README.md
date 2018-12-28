@@ -35,7 +35,7 @@ Maven
        <dependency>
 	    <groupId>com.github.yujinzhao123</groupId>
 	    <artifactId>DoubleHeadedDragonBar</artifactId>
-	    <version>1.0.2</version>
+	    <version>1.0.4</version>
 	</dependency>
 ```       
         
