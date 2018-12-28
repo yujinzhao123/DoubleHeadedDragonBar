@@ -14,18 +14,20 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class DoubleHeadedDragonBar extends View {
 
 
     private WindowManager mWindowManager;
-    private WindowManager.LayoutParams mLayoutParams, mLayoutParams1;
+    private WindowManager.LayoutParams mLayoutParams, mLayoutParams1, mLayoutParams2;
 
     DhdBarCallBack callBack;
 
@@ -61,7 +63,7 @@ public class DoubleHeadedDragonBar extends View {
 
     boolean isMinMode = true;//选择最小值模式
 
-    private View toastView, toastView1;
+    private View toastView, toastView1, toastView2;
 
 
     public void setUnit(String unitStr1, String unitStr2) {
@@ -76,12 +78,13 @@ public class DoubleHeadedDragonBar extends View {
 
     /**
      * 设置最小值的百分之多少
+     *
      * @param minValue
      */
     public void setMinValue(int minValue) {
-        if (minValue < 0){
+        if (minValue < 0) {
             minValue = 0;
-        }else if (minValue > max){
+        } else if (minValue > max) {
             minValue = max;
         }
 
@@ -91,14 +94,16 @@ public class DoubleHeadedDragonBar extends View {
     public int getMaxValue() {
         return maxValue;
     }
+
     /**
      * 设置最大值的百分之多少
+     *
      * @param maxValue
      */
     public void setMaxValue(int maxValue) {
-        if (maxValue < 0){
+        if (maxValue < 0) {
             maxValue = 0;
-        }else if (maxValue > max){
+        } else if (maxValue > max) {
             maxValue = max;
         }
         this.maxValue = maxValue;
@@ -120,7 +125,7 @@ public class DoubleHeadedDragonBar extends View {
         textColor = a.getColor(R.styleable.DoubleHeadedDragonBar_text_color, Color.parseColor("#5C6980"));
         bgColor = a.getColor(R.styleable.DoubleHeadedDragonBar_bg_color, Color.parseColor("#F2F4FE"));
 
-        bgHeight = (int) a.getDimension(R.styleable.DoubleHeadedDragonBar_seek_height,dp2px(4));
+        bgHeight = (int) a.getDimension(R.styleable.DoubleHeadedDragonBar_seek_height, dp2px(4));
 
         int valueColor = a.getColor(R.styleable.DoubleHeadedDragonBar_value_color, Color.parseColor("#1B97F7"));
         valuePaint.setColor(valueColor);
@@ -139,8 +144,10 @@ public class DoubleHeadedDragonBar extends View {
 
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
+        mLayoutParams2 = new WindowManager.LayoutParams();
         mLayoutParams = new WindowManager.LayoutParams();
         mLayoutParams1 = new WindowManager.LayoutParams();
+        initLayoutParams(mLayoutParams2);
         initLayoutParams(mLayoutParams);
         initLayoutParams(mLayoutParams1);
 
@@ -163,6 +170,7 @@ public class DoubleHeadedDragonBar extends View {
         } else {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
         }
+
     }
 
     public Bitmap setImgSize(Bitmap bm, float newWidth, float newHeight) {
@@ -188,17 +196,46 @@ public class DoubleHeadedDragonBar extends View {
         toastView1 = view;
     }
 
+    public void setToastView2(View view) {
+        toastView2 = view;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawUnit(canvas);
         drawBg(canvas);
         drawValue(canvas);
-
         drawButton(canvas);
         calculationToastIndex();
+        drawBubble();
+    }
+
+    public void drawBubble() {
+
         drawToast();
         drawToast1();
+        if (toastView2 == null) {
+            return;
+        }
+
+        if (isCoincide) {
+//            if (toastView2.getVisibility() == GONE) {
+//            }
+            mLayoutParams2.x = (toastViewX + toastView1X) / 2;
+            mLayoutParams2.y = toastViewY;
+            if (toastView2.getParent() == null) {
+                mWindowManager.addView(toastView2, mLayoutParams2);
+            } else {
+                mWindowManager.updateViewLayout(toastView2, mLayoutParams2);
+            }
+            toastView2.setVisibility(VISIBLE);
+
+        }else {
+            toastView2.setVisibility(GONE);
+        }
+
+
     }
 
     //弹出控件的x,y坐标
@@ -215,17 +252,22 @@ public class DoubleHeadedDragonBar extends View {
             return;
         }
 
+        if (isCoincide) {
+            toastView.setVisibility(GONE);
+            return;
+        }
+
         if (toastView.getVisibility() == GONE) {
             toastView.setVisibility(VISIBLE);
         }
+        mLayoutParams.x = toastViewX;
+        mLayoutParams.y = toastViewY;
         if (toastView.getParent() == null) {
-            mLayoutParams.x = toastViewX;
-            mLayoutParams.y = toastViewY;
+
             mWindowManager.addView(toastView, mLayoutParams);
             return;
         } else {
-            mLayoutParams.x = toastViewX;
-            mLayoutParams.y = toastViewY;
+
             mWindowManager.updateViewLayout(toastView, mLayoutParams);
         }
 
@@ -236,18 +278,20 @@ public class DoubleHeadedDragonBar extends View {
         if (toastView1 == null) {
             return;
         }
+        if (isCoincide) {
+            toastView1.setVisibility(GONE);
+            return;
+        }
 
         if (toastView1.getVisibility() == GONE) {
             toastView1.setVisibility(VISIBLE);
         }
+        mLayoutParams1.x = toastView1X;
+        mLayoutParams1.y = toastView1Y;
         if (toastView1.getParent() == null) {
-            mLayoutParams1.x = toastView1X;
-            mLayoutParams1.y = toastView1Y;
             mWindowManager.addView(toastView1, mLayoutParams1);
             return;
         } else {
-            mLayoutParams1.x = toastView1X;
-            mLayoutParams1.y = toastView1Y;
             mWindowManager.updateViewLayout(toastView1, mLayoutParams1);
         }
 
@@ -269,6 +313,11 @@ public class DoubleHeadedDragonBar extends View {
     }
 
     /**
+     * 气泡是否重合
+     */
+    boolean isCoincide = false;
+
+    /**
      * 计算toast坐标
      */
     private void calculationToastIndex() {
@@ -287,7 +336,16 @@ public class DoubleHeadedDragonBar extends View {
         if (toastView1 != null) {
             toastView1.measure(width, height);
             toastView1Y = (int) (point[1] - getStatus_bar_height() - (toastView1.getMeasuredHeight() - buttonHeight / 2));
-            toastView1X = (int) (buttonWidth / 2 + seekWidth * maxValue / max + point[0] - toastView.getMeasuredWidth() / 2);
+            toastView1X = (int) (buttonWidth / 2 + seekWidth * maxValue / max + point[0] - toastView1.getMeasuredWidth() / 2);
+        }
+
+
+        if (toastView != null && toastView1 != null) {
+            if (Math.abs(toastViewX - toastView1X) < (toastView.getMeasuredWidth() / 2 + toastView1.getMeasuredWidth() / 2)) {
+                isCoincide = true;
+            } else {
+                isCoincide = false;
+            }
         }
 
 
@@ -324,11 +382,30 @@ public class DoubleHeadedDragonBar extends View {
                 break;
 
             case MotionEvent.ACTION_MOVE:
+                int a = minValue;
+                int b = maxValue;
                 getTouchSeekValue(event);
-                if (callBack != null) {
-                    callBack.onValueChange(minValue, maxValue);
+                if (a== minValue && b == maxValue){
+
+                }else {
+                    if (callBack != null) {
+
+                        if (toastView != null){
+                            ((TextView)toastView).setText(callBack.getMinString(minValue));
+                        }
+
+                        if (toastView1 != null){
+                            ((TextView)toastView1).setText(callBack.getMaxString(maxValue));
+                        }
+
+                        if (toastView2 != null){
+                            ((TextView)toastView2).setText(callBack.getMinMaxString(minValue,maxValue));
+                        }
+                    }
+
+                    invalidate();
                 }
-                invalidate();
+
 
                 break;
             case MotionEvent.ACTION_UP:
@@ -441,6 +518,7 @@ public class DoubleHeadedDragonBar extends View {
         if (visibility != VISIBLE) {
             hideToastView(toastView);
             hideToastView(toastView1);
+            hideToastView(toastView2);
         } else {
 
         }
@@ -511,10 +589,20 @@ public class DoubleHeadedDragonBar extends View {
     }
 
     public abstract static class DhdBarCallBack {
-        public void onValueChange(float minPercentage, float maxPercentage) {
 
+        public String getMinString(int value){
+            return value+"";
         }
-        public void onEndTouch(float minPercentage, float maxPercentage){
+
+        public String getMaxString(int value){
+            return value+"";
+        }
+
+        public String getMinMaxString(int value,int value1){
+            return value+"";
+        }
+
+        public void onEndTouch(float minPercentage, float maxPercentage) {
 
         }
     }

@@ -6,6 +6,6 @@
     android:textColor="#fff"
     android:gravity="center"
     android:background="@drawable/toast_bg"
-    android:layout_height="wrap_content">
+    android:layout_height="100dp">
 
 </TextView>
