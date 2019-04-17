@@ -138,5 +138,8 @@ Maven
         bar1.setUnit("0", "100");
         bar1.setMinValue(10);
         bar1.setMaxValue(80);
+	
+	//手动隐藏气泡，避免在PopupWindow中关闭不了气泡
+	//bar.close();
     }
 ```
