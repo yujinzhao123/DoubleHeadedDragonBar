@@ -6,7 +6,7 @@
 
 ****
 # 样式
-![图](https://github.com/yujinzhao123/DoubleHeadedDragonBar/blob/master/yyyyy_gaitubao_com_339x603.gif)
+![图](https://github.com/yujinzhao123/DoubleHeadedDragonBar/blob/master/alf86-zl32e.gif)
 *****
 
 ## 使用
@@ -20,7 +20,7 @@ Grade
 	}
         
         dependencies {
-	        implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.2'
+	        implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.4'
 	}
 ```         
 Maven
@@ -35,7 +35,7 @@ Maven
        <dependency>
 	    <groupId>com.github.yujinzhao123</groupId>
 	    <artifactId>DoubleHeadedDragonBar</artifactId>
-	    <version>1.0.2</version>
+	    <version>1.0.4</version>
 	</dependency>
 ```       
         
