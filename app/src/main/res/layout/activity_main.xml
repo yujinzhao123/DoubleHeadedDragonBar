@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+    android:paddingTop="50dp"
     tools:context=".MainActivity">
 
 
 
 
     <cn.bar.DoubleHeadedDragonBar
+
         android:layout_margin="10dp"
         android:id="@+id/bar"
         app:text_color="#5C6980"
@@ -31,5 +33,12 @@
         app:seek_height="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="popup"
+        android:text="sss" />
 
 </RelativeLayout>

@@ -14,7 +14,6 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -588,6 +587,22 @@ public class DoubleHeadedDragonBar extends View {
     int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 Resources.getSystem().getDisplayMetrics());
+    }
+
+    /**
+     * 手动隐藏气泡
+     */
+    public void close() {
+        if (toastView != null){
+            toastView.setVisibility(GONE);
+        }
+        if (toastView1 != null){
+            toastView1.setVisibility(GONE);
+        }
+        if (toastView2 != null){
+            toastView2.setVisibility(GONE);
+        }
+
     }
 
     public abstract static class DhdBarCallBack {

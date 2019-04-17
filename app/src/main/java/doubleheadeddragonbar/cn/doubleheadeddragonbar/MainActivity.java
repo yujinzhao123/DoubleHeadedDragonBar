@@ -1,14 +1,19 @@
 package doubleheadeddragonbar.cn.doubleheadeddragonbar;
 
-import android.support.v7.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+
 import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import cn.bar.DoubleHeadedDragonBar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
 
     DoubleHeadedDragonBar bar, bar1;
@@ -54,5 +59,32 @@ public class MainActivity extends AppCompatActivity {
         bar1.setUnit("0", "100");
         bar1.setMinValue(10);
         bar1.setMaxValue(80);
+    }
+
+    public void popup(View view){
+        // 用于PopupWindow的View
+        View contentView=LayoutInflater.from(this).inflate(R.layout.pp_layout, null, false);
+
+        PopupWindow window=new PopupWindow(contentView, 500, 500, true);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+
+        final DoubleHeadedDragonBar bar3 = contentView.findViewById(R.id.bar3);
+        bar3.setUnit("0", "100");
+        bar3.setMinValue(10);
+        bar3.setMaxValue(80);
+        TextView testView2 = (TextView) LayoutInflater.from(this).inflate(R.layout.toast_view, null);
+        bar3.setToastView(testView2);
+        TextView testView1 = (TextView) LayoutInflater.from(this).inflate(R.layout.toast_view, null);
+        bar3.setToastView1(testView1);
+
+        window.showAsDropDown(view);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                bar3.close();
+            }
+        });
     }
 }
